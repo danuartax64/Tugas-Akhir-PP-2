@@ -3,7 +3,9 @@ from threading import Thread
 import time
 from sys import exit
 
-client = []
+clients = []
+global n
+n = len(clients)
 
 host = '192.168.56.103'
 port = 4200
@@ -14,10 +16,24 @@ def Connecting():
     print("Koneksi berhasil dibuka")
     s.listen()
 
+def status(c):
+    while True:
+        try:
+            for c in clients:
+                s.send(('a').encode())
+        except:
+            index = clients.index(c)
+            clients.remove(c)
+            global n
+            n = len(clients)
+            s.close()
+            break
+
 def listen():
     while True:
-        c = s.accept()
-        client.append(c)
+        global c
+        c, addr = s.accept()
+        clients.append(c)
 
         try:
             data = c.recv(1024).decode()
@@ -27,9 +43,9 @@ def listen():
             i = 0
 
             for i in range(4):
-                print("Data Masuk!")
+                print("\nData Masuk!")
                 time.sleep(0.5)
-                print('', end='\r')
+                print('\n     ', end='\r')
                 i += 1
         except ConnectionResetError:
             print("Listening...", end='\r')
@@ -40,7 +56,6 @@ def menu():
     print("Listen on Port : %d" %port)
     while True:
         try:
-            n = len(client)
             time.sleep(1)
             print("Total client yang tersambung: %d" %n, end='\r')
         except KeyboardInterrupt:
@@ -50,9 +65,12 @@ if __name__ == '__main__':
     Connecting()
     try:
         threadrecv = Thread(target=listen, args=())
+        threadstatus = Thread(target=status, args=(c))
         threadrecv.start()
+        threadstatus.start()
         menu()
     except KeyboardInterrupt:
         threadrecv.join()
+        threadstatus.join()
         print("Keluar....")
         exit()
