@@ -5,7 +5,7 @@ from sys import exit
 
 clients = set()
 
-host = '192.168.56.103'
+host = '192.168.210.205'
 port = 4200
 s = socket(AF_INET, SOCK_STREAM)
 
@@ -23,6 +23,7 @@ def listen():
             data = c.recv(1024).decode()
             if data == 'exit':
                 clients.remove[c]
+                c.close()
             f = open('log.csv', 'a')
             f.write(data + '\n')
             f.close()
@@ -53,9 +54,11 @@ if __name__ == '__main__':
     Connecting()
     try:
         threadrecv = Thread(target=listen, args=())
+        threadmenu = Thread(target=menu, args=())
         threadrecv.start()
-        menu()
+        threadmenu.start()
     except KeyboardInterrupt:
         threadrecv.join()
+        threadmenu.join()
         print("Keluar....")
         exit()
