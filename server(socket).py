@@ -15,9 +15,9 @@ def Connecting():
     s.listen()
 
 def listen():
+    c, addr = s.accept()
+    clients.append(c)
     while True:
-        c, addr = s.accept()
-        clients.append(c)
 
         try:
             data = c.recv(1024).decode()
@@ -33,8 +33,10 @@ def listen():
                 time.sleep(0.5)
                 print('', end='\r')
                 i += 1
-        except ConnectionResetError:
+
+        except:
             print("Listening...", end='\r')
+            listen()
 
 def menu():
     print("=============Pusat Data Storage Kasir==============")
