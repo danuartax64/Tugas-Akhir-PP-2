@@ -31,7 +31,8 @@ def menu():
                 total = harga * kuantitas
             else:
                 pass
-            diskon = int(input("Potongan Harga: "))            
+            diskon = int(input("Potongan Harga: "))   
+            diskonstr = str(diskon)         
             total -= diskon
 
             if total < 0:
@@ -46,10 +47,8 @@ def menu():
             hargastr = str(harga)
             kuantistr = str(kuantitas)
             totalstr = str(total)
-            msg = barang + hargastr + kuantistr + totalstr
             s.send((client + ',' + barang + ',' + hargastr + ',' + kuantistr + ',' + totalstr).encode())                            #kirim data barang ke server
-            log.append(msg)
-
+            masuklist(diskonstr, barang, hargastr, kuantistr, totalstr)
             global n
             n += 1
             input()
@@ -60,8 +59,17 @@ def menu():
             print("Ip Server %s" %host)
             print("Port : %d" %port)
             print("Input data kali ini sebanyak %d kali" %n)
-            clear()
+            if n > 0:
+                ask = input("Apakah ingin melihat history masukan barang di mesin ini? (y/n): ")
+                if ask == 'y':
+                    n = len(log)
+                    clear()
+                    print("\n==========================History==========================")
+                    print("Format : Index 1-5 = Barang, Harga, Kuantitas, Diskon, Total\n")
+                    for i in range(n):
+                        print(log[i], end='')
             input()
+            clear()
         
         elif masukan == 3:
             print("Keluar...")
@@ -73,7 +81,7 @@ def menu():
 def connecting():
     try:
         global host
-        host = input('Masukkan IP Server: ')                                #fungsi untuk connecting socket ke sisi server
+        host = input('Masukkan IP Server: ')                                            #fungsi untuk connecting socket ke sisi server
         global port
         port = int(input('Masukkan Port Server: '))
         s.connect((host,port))
@@ -84,15 +92,22 @@ def connecting():
     except:
         print("-> Error tidak dapat menyambungkan, mohon dicek kembali host dan port tujuan atau sisi server belum dibuka")
         time.sleep(1)
-        return "error"
-        
+        return 'error'
+
+def masuklist(a, b, c, d, e):
+    log.append(b + ',')
+    log.append(c + ',')
+    log.append(d + ',')
+    log.append(a + ',')
+    log.append(e + ',')
+    log.append('\n')
+
 if __name__ == '__main__':
 
     client = input('Masuk sebagai: ')
 
     try:
-        connecting()
-        if connecting == 'error':
+        if connecting() == 'error':
             print("Ada yang salah dengan host / port server")
             print("Closing App...")
             sys.exit()
