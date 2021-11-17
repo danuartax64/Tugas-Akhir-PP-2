@@ -75,6 +75,7 @@ def menu():
             print("Keluar...")
             time.sleep(1)
             clear()
+            s.send("exit".encode())
             sys.exit()
 
 
@@ -114,4 +115,5 @@ if __name__ == '__main__':
         else:
             menu()
     except:
+        s.send("exit".encode())
         sys.exit()
