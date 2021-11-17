@@ -5,7 +5,7 @@ from sys import exit
 
 client = []
 
-host = '192.168.52.205'
+host = '192.168.56.103'
 port = 4200
 s = socket(AF_INET, SOCK_STREAM)
 
@@ -16,8 +16,7 @@ def Connecting():
 
 def listen():
     while True:
-        c, addr = s.accept()
-        print("Client baru tersambung!", addr)
+        c = s.accept()
         client.append(c)
 
         try:
@@ -28,12 +27,12 @@ def listen():
             i = 0
 
             for i in range(4):
-                print("Data Masuk!", end='\r')
+                print("Data Masuk!")
                 time.sleep(0.5)
                 print('', end='\r')
                 i += 1
         except:
-            print("Listening...", end='')
+            print("Listening...", end='\r')
 
 def menu():
     print("=============Pusat Data Storage Kasir==============")
