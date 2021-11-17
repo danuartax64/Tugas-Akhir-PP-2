@@ -31,7 +31,7 @@ def listen():
                 time.sleep(0.5)
                 print('', end='\r')
                 i += 1
-        except:
+        except ConnectionResetError:
             print("Listening...", end='\r')
 
 def menu():
