@@ -4,8 +4,6 @@ import time
 from sys import exit
 
 clients = []
-global n
-n = len(clients)
 
 host = '192.168.56.103'
 port = 4200
@@ -31,7 +29,7 @@ def status(c):
 def listen():
     while True:
         global c
-        c = s.accept()
+        c, addr = s.accept()
         clients.append(c)
         threadstatus = Thread(target=status, args=(c,))
         threadstatus.start()
@@ -58,6 +56,7 @@ def menu():
     print("Listen on Port : %d" %port)
     while True:
         try:
+            n = len(clients)
             time.sleep(1)
             print("Total client yang tersambung: %d" %n, end='\r')
         except KeyboardInterrupt:
