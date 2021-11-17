@@ -28,9 +28,9 @@ def listen():
             i = 0
 
             for i in range(4):
-                print("Data Masuk!", end='')
+                print("Data Masuk!", end='\r')
                 time.sleep(0.5)
-                print('', end='')
+                print('', end='\r')
                 i += 1
         except:
             print("Listening...", end='')
@@ -42,7 +42,8 @@ def menu():
     while True:
         try:
             n = len(client)
-            print("Total client yang tersambung: %d" %n, end='')
+            time.sleep(1)
+            print("Total client yang tersambung: %d" %n, end='\r')
         except KeyboardInterrupt:
             break
 
