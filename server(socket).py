@@ -28,7 +28,6 @@ def status(c):
 
 def listen():
     while True:
-        global c
         c, addr = s.accept()
         clients.append(c)
         threadstatus = Thread(target=status, args=(c,))
@@ -42,9 +41,9 @@ def listen():
             i = 0
 
             for i in range(4):
-                print("\nData Masuk!")
+                print("\nData Masuk!", end='\r')
                 time.sleep(0.5)
-                print('\n     ', end='\r')
+                print('', end='\r')
                 i += 1
         except ConnectionResetError:
             print("Listening...", end='\r')
