@@ -12,14 +12,13 @@ s = socket(AF_INET, SOCK_STREAM)
 def Connecting():
     s.bind((host, port))
     print("Koneksi berhasil dibuka")
-    s.listen()
 
 def listen():
-    while True:
+    try:
+        s.listen()
         c, addr = s.accept()
         clients.add(c)
-
-        try:
+        while True:
             data = c.recv(1024).decode()
             if data == 'exit':
                 clients.remove[c]
@@ -35,8 +34,8 @@ def listen():
                 print('', end='\r')
                 i += 1
 
-        except:
-            print("Listening...", end='\r')
+    except:
+        print("Listening...", end='\r')
 
 def menu():
     print("=============Pusat Data Storage Kasir==============")
