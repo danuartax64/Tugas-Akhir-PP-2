@@ -15,9 +15,9 @@ def Connecting():
     s.listen()
 
 def listen():
-    c, addr = s.accept()
-    clients.add(c)
     while True:
+        c, addr = s.accept()
+        clients.add(c)
 
         try:
             data = c.recv(1024).decode()
@@ -36,7 +36,6 @@ def listen():
 
         except:
             print("Listening...", end='\r')
-            listen()
 
 def menu():
     print("=============Pusat Data Storage Kasir==============")
