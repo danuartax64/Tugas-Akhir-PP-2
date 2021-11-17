@@ -14,27 +14,15 @@ def Connecting():
     print("Koneksi berhasil dibuka")
     s.listen()
 
-def status(c):
-    while True:
-        try:
-            for c in clients:
-                s.send(('a').encode())
-        except:
-            clients.remove(c)
-            global n
-            n = len(clients)
-            s.close()
-            break
-
 def listen():
     while True:
         c, addr = s.accept()
         clients.append(c)
-        threadstatus = Thread(target=status, args=(c,))
-        threadstatus.start()
 
         try:
             data = c.recv(1024).decode()
+            if data == 'exit':
+                clients.remove[c]
             f = open('log.csv', 'a')
             f.write(data + '\n')
             f.close()
@@ -47,7 +35,6 @@ def listen():
                 i += 1
         except ConnectionResetError:
             print("Listening...", end='\r')
-            threadstatus.join()
 
 def menu():
     print("=============Pusat Data Storage Kasir==============")
