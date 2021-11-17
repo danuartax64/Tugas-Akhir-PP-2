@@ -22,7 +22,6 @@ def status(c):
             for c in clients:
                 s.send(('a').encode())
         except:
-            index = clients.index(c)
             clients.remove(c)
             global n
             n = len(clients)
@@ -32,8 +31,10 @@ def status(c):
 def listen():
     while True:
         global c
-        c, addr = s.accept()
+        c = s.accept()
         clients.append(c)
+        threadstatus = Thread(target=status, args=(c,))
+        threadstatus.start()
 
         try:
             data = c.recv(1024).decode()
@@ -49,6 +50,7 @@ def listen():
                 i += 1
         except ConnectionResetError:
             print("Listening...", end='\r')
+            threadstatus.join()
 
 def menu():
     print("=============Pusat Data Storage Kasir==============")
@@ -65,12 +67,9 @@ if __name__ == '__main__':
     Connecting()
     try:
         threadrecv = Thread(target=listen, args=())
-        threadstatus = Thread(target=status, args=(c))
         threadrecv.start()
-        threadstatus.start()
         menu()
     except KeyboardInterrupt:
         threadrecv.join()
-        threadstatus.join()
         print("Keluar....")
         exit()
