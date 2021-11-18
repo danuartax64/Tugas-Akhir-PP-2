@@ -32,6 +32,7 @@ def listen():
                 i = 0
                 print("\nData Masuk!")
                 time.sleep(1)
+                break
         except:
             print("Listening...", end='\r')
 
