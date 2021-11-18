@@ -1,11 +1,14 @@
+import os
 import socket
 import sys
 import time
-import os
+from socket import timeout
+from threading import Thread
 
 s = socket.socket()
 n = 0
 log = []
+a = True
 
 def clear():
     try:
@@ -24,16 +27,21 @@ def menu():
         masukan = int(input("Pilihan: "))                                      #asking pilihan user
 
         if masukan == 1:
-            barang = input("Nama Barang keluar: ")
-            harga = int(input("Harga Barang: "))
-            kuantitas = int(input("Jumlah: "))
-            if kuantitas >= 1:
-                total = harga * kuantitas
-            else:
-                pass
-            diskon = int(input("Potongan Harga: "))   
-            diskonstr = str(diskon)         
-            total -= diskon
+            while True:
+                try:
+                    barang = input("Nama Barang keluar: ")
+                    harga = int(input("Harga Barang: "))
+                    kuantitas = int(input("Jumlah: "))
+                    if kuantitas >= 1:
+                        total = harga * kuantitas
+                    else:
+                        pass
+                    diskon = int(input("Potongan Harga: "))   
+                    diskonstr = str(diskon)         
+                    total -= diskon
+                    break
+                except:
+                    print("Salah masukan data? ulang lagi")
 
             if total < 0:
                 print("Gratis, pembeli tidak perlu membayar apapun")
@@ -95,6 +103,17 @@ def connecting():
         time.sleep(1)
         return 'error'
 
+def recv():
+    global a
+    while a is True:
+        time.sleep(0.1)
+        try:
+            s.settimeout(1)
+        except timeout:
+            pass
+        except:
+            a = False
+
 def masuklist(a, b, c, d, e):
     log.append(b + ',')
     log.append(c + ',')
@@ -104,16 +123,18 @@ def masuklist(a, b, c, d, e):
     log.append('\n')
 
 if __name__ == '__main__':
-
+    threadrecv = Thread(target=recv, args=())
     client = input('Masuk sebagai: ')
-
     try:
         if connecting() == 'error':
             print("Ada yang salah dengan host / port server")
             print("Closing App...")
             sys.exit()
         else:
+            threadrecv.start()
             menu()
     except:
+        a = False
         s.send("exit".encode())
+        threadrecv.join()
         sys.exit()
