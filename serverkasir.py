@@ -15,19 +15,25 @@ def Connecting():
     s.listen()
 
 def listen():
-    try:
-        while True:
-            c, addr = s.accept()
-            clients.add(c)
-            data = c.recv(1024).decode()
-            f = open('log.csv', 'a')
-            f.write(data + '\n')
-            f.close()
-            i = 0
-            print("\nData Masuk!")
-            time.sleep(1)
-    except:
-        print("Listening...", end='\r')
+    while True:
+        try:
+            while True:
+                c, addr = s.accept()
+                clients.add(c)
+                data = c.recv(1024).decode()
+                if data == "exit":
+                    clients.remove[c]
+                    print("1 Client telah terputus")
+                    time.sleep(2)
+                    break
+                f = open('log.csv', 'a')
+                f.write(data + '\n')
+                f.close()
+                i = 0
+                print("\nData Masuk!")
+                time.sleep(1)
+        except:
+            print("Listening...", end='\r')
 
 def menu():
     print("=============Pusat Data Storage Kasir==============")
