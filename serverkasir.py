@@ -14,15 +14,6 @@ def Connecting():
     print("Koneksi berhasil dibuka")
     s.listen()
 
-def handle(a):
-    while True:
-        try:
-            for a in clients:
-                a[0].send('tes'.encode())
-        except timeout or TimeoutError:
-            clients.remove[a]
-            print("1 Client telah terputus")
-
 def listen():
     while True:
         c, addr = s.accept()
@@ -32,15 +23,12 @@ def listen():
             for c in clients:
                 clients.remove(c)
                 print("1 Client telah terputus!")
-        f = open('log.csv', 'a')
-        f.write(data + '\n')
-        f.close()
-        print("\nData Masuk!")
-        time.sleep(1)
-
-        global threadlisten
-        threadlisten = Thread(target=handle, args=(c,))
-        threadlisten.start()
+        else:
+            f = open('log.csv', 'a')
+            f.write(data + '\n')
+            f.close()
+            print("\nData Masuk!")
+            time.sleep(1)
 
 def menu():
     print("=============Pusat Data Storage Kasir==============")
@@ -62,6 +50,5 @@ if __name__ == '__main__':
         menu()
     except KeyboardInterrupt:
         threadrecv.join()
-        threadlisten.join()
         print("Keluar....")
         exit()
