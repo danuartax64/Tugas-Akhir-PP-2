@@ -23,19 +23,23 @@ def listen():
             pass
 
 def write():
+    global clients
     while a == True:
         for c in clients:
             try:
-                c[0].settimeout(1)
-                data = c[0].recv(1024).decode()
-                if data == 'exit':
-                    for c in clients:
-                        clients.remove(c)
-                else:
-                    f = open('log.csv', 'a')
-                    f.write(data + '\n')
-                    f.close()
-                    print("\nData Masuk!")
+                 c[0].settimeout(1)
+                 data = c[0].recv(1024).decode()
+                 while True:
+                    if data == 'exit':
+                        for c in clients:
+                            clients.remove(c)
+                        break
+                    else:
+                        f = open('log.csv', 'a')
+                        f.write(data + '\n')
+                        f.close()
+                        print("\nData Masuk!")
+                        break
             except timeout:
                 pass
 
