@@ -18,14 +18,10 @@ def handle(a):
     while True:
         try:
             for a in clients:
-                time.sleep(0.1)
-                s.settimeout(1)
-                s.send(''.encode())
-        except:
+                a[0].send('tes'.encode())
+        except timeout or TimeoutError:
             clients.remove[a]
             print("1 Client telah terputus")
-            time.sleep(2)
-            break
 
 def listen():
     while True:
