@@ -1,9 +1,9 @@
-from socket import AF_INET, SOCK_STREAM, socket
+from socket import AF_INET, SOCK_STREAM, socket, timeout
 from threading import Thread
 import time
 from sys import exit
 
-clients = set()
+clients = []
 
 host = '192.168.210.205'
 port = 4200
@@ -18,6 +18,8 @@ def handle(a):
     while True:
         try:
             for a in clients:
+                time.sleep(0.1)
+                s.settimeout(1)
                 s.send(''.encode())
         except:
             clients.remove[a]
@@ -28,7 +30,7 @@ def handle(a):
 def listen():
     while True:
         c, addr = s.accept()
-        clients.add(c)
+        clients.append(c)
         data = c.recv(1024).decode()
         f = open('log.csv', 'a')
         f.write(data + '\n')
@@ -37,7 +39,7 @@ def listen():
         time.sleep(1)
 
         global threadlisten
-        threadlisten = Thread(target=listen, args=(c))
+        threadlisten = Thread(target=handle, args=(c,))
         threadlisten.start()
 
 def menu():
