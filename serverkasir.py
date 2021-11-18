@@ -14,29 +14,22 @@ def Connecting():
     print("Koneksi berhasil dibuka")
     s.listen()
 
-def listen():
+def write():
     global a
     while a == True:
         c, addr = s.accept()
         clients.append(c)
-
-def write():
-    global a
-    while a == True:
-        try:
-            data = c.recv(1024).decode()
-            if data == 'exit':
-                for c in clients:
-                    clients.remove(c)
-                    print("\n1 Client telah terputus!")
-            elif data !='exit':
-                f = open('log.csv', 'a')
-                f.write(data + '\n')
-                f.close()
-                print("\nData Masuk!")
-                time.sleep(1)
-        except:
-            pass
+        data = c.recv(1024).decode()
+        if data == 'exit':
+            for c in clients:
+                clients.remove(c)
+                print("\n1 Client telah terputus!")
+        elif data !='exit':
+            f = open('log.csv', 'a')
+            f.write(data + '\n')
+            f.close()
+            print("\nData Masuk!")
+            time.sleep(1)
 
 def menu():
     print("=============Pusat Data Storage Kasir==============")
@@ -54,13 +47,10 @@ if __name__ == '__main__':
     Connecting()
     a = True
     try:
-        threadrecv = Thread(target=listen, args=())
         threadwrite = Thread(target=write, args=())
-        threadrecv.start()
         threadwrite.start()
         menu()
     except KeyboardInterrupt:
-        threadrecv.join()
         threadwrite.join()
         print("Keluar....")
         exit()
