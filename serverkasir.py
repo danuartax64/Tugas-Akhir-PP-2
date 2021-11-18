@@ -15,12 +15,13 @@ def Connecting():
     s.listen()
 
 def handle():
-    global c
-    c, addr = s.accept()
-    clients.add(c)
-    if data == "exit":
-        clients.remove[c]
-        c.close()
+    while True:
+        global c
+        c, addr = s.accept()
+        clients.add(c)
+        if data == "exit":
+            clients.remove[c]
+            c.close()
 
 def listen():
     try:
