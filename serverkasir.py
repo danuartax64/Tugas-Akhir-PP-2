@@ -41,6 +41,7 @@ def write():
                         f.close()
                         print("\nData Masuk!")
                         time.sleep(1)
+                        print ("\033[A                             \033[A")
                         break
             except timeout:
                 pass
