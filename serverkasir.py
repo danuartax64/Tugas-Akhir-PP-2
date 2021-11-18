@@ -19,24 +19,24 @@ def listen():
     while a == True:
         c, addr = s.accept()
         clients.append(c)
-        b = True
-        while b == True:
+
+def write():
+    global a
+    while a == True:
+        try:
             data = c.recv(1024).decode()
-            while True:
-                if data == 'exit':
-                    for c in clients:
-                        clients.remove(c)
-                        print("\n1 Client telah terputus!")
-                        b = False
-                        break
-                elif data !='exit':
-                    f = open('log.csv', 'a')
-                    f.write(data + '\n')
-                    f.close()
-                    print("\nData Masuk!")
-                    time.sleep(1)
-                    b = False
-                    break
+            if data == 'exit':
+                for c in clients:
+                    clients.remove(c)
+                    print("\n1 Client telah terputus!")
+            elif data !='exit':
+                f = open('log.csv', 'a')
+                f.write(data + '\n')
+                f.close()
+                print("\nData Masuk!")
+                time.sleep(1)
+        except:
+            pass
 
 def menu():
     print("=============Pusat Data Storage Kasir==============")
@@ -55,9 +55,12 @@ if __name__ == '__main__':
     a = True
     try:
         threadrecv = Thread(target=listen, args=())
+        threadwrite = Thread(target=write, args=())
         threadrecv.start()
+        threadwrite.start()
         menu()
     except KeyboardInterrupt:
         threadrecv.join()
+        threadwrite.join()
         print("Keluar....")
         exit()
