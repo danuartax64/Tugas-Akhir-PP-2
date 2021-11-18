@@ -17,21 +17,22 @@ def Connecting():
 def listen():
     c, addr = s.accept()
     clients.append(c)
-    data = c.recv(1024).decode()
     global a
     while a == True:
+        data = c.recv(1024).decode()
         while True:
             if data == 'exit':
                 for c in clients:
                     clients.remove(c)
                     print("\n1 Client telah terputus!")
                     break
-            else:
+            elif data is not 'exit':
                 f = open('log.csv', 'a')
                 f.write(data + '\n')
                 f.close()
                 print("\nData Masuk!")
                 time.sleep(1)
+                break
 
 def menu():
     print("=============Pusat Data Storage Kasir==============")
@@ -42,6 +43,7 @@ def menu():
             n = len(clients)
             time.sleep(1)
             print("Total client yang tersambung: %d" %n, end='\r')
+            print(clients, end='\r')
         except KeyboardInterrupt:
             break
 
