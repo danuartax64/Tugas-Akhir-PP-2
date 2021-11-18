@@ -16,24 +16,27 @@ def Connecting():
 
 def listen():
     global a
-    c, addr = s.accept()
-    clients.append(c)
     while a == True:
-        data = c.recv(1024).decode()
-        print("KSINI")
-        while True:
-            if data == 'exit':
-                for c in clients:
-                    clients.remove(c)
-                    print("\n1 Client telah terputus!")
+        c, addr = s.accept()
+        clients.append(c)
+        b = True
+        while b == True:
+            data = c.recv(1024).decode()
+            while True:
+                if data == 'exit':
+                    for c in clients:
+                        clients.remove(c)
+                        print("\n1 Client telah terputus!")
+                        b = False
+                        break
+                elif data !='exit':
+                    f = open('log.csv', 'a')
+                    f.write(data + '\n')
+                    f.close()
+                    print("\nData Masuk!")
+                    time.sleep(1)
+                    b = False
                     break
-            elif data !='exit':
-                f = open('log.csv', 'a')
-                f.write(data + '\n')
-                f.close()
-                print("\nData Masuk!")
-                time.sleep(1)
-                break
 
 def menu():
     print("=============Pusat Data Storage Kasir==============")
