@@ -37,10 +37,10 @@ def listen():
         print("Listening...", end='\r')
 
 def menu():
+    print("=============Pusat Data Storage Kasir==============")
+    print("Listen on IP : %s" %host)
+    print("Listen on Port : %d" %port)
     while True:
-        print("=============Pusat Data Storage Kasir==============", end='\r')
-        print("Listen on IP : %s" %host, end='\r')
-        print("Listen on Port : %d" %port, end='\r')
         try:
             n = len(clients)
             time.sleep(1)
