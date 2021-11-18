@@ -23,13 +23,11 @@ def write():
         if data == 'exit':
             for c in clients:
                 clients.remove(c)
-                print("\n1 Client telah terputus!")
-        elif data !='exit':
+        else:
             f = open('log.csv', 'a')
             f.write(data + '\n')
             f.close()
             print("\nData Masuk!")
-            time.sleep(1)
 
 def menu():
     print("=============Pusat Data Storage Kasir==============")
@@ -53,4 +51,6 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         threadwrite.join()
         print("Keluar....")
+        a = False
+        s.close()
         exit()
