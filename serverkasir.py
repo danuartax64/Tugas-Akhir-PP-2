@@ -14,25 +14,17 @@ def Connecting():
     print("Koneksi berhasil dibuka")
     s.listen()
 
-def handle():
-    while True:
-        c, addr = s.accept()
-        clients.add(c)
-        data = c.recv(1024).decode()
-        if data == "exit":
-            clients.remove[c]
-            c.close()
-
 def listen():
     try:
         while True:
             c, addr = s.accept()
+            clients.add(c)
             data = c.recv(1024).decode()
             f = open('log.csv', 'a')
             f.write(data + '\n')
             f.close()
             i = 0
-            print("Data Masuk!")
+            print("\nData Masuk!")
             time.sleep(1)
     except:
         print("Listening...", end='\r')
@@ -53,12 +45,9 @@ if __name__ == '__main__':
     Connecting()
     try:
         threadrecv = Thread(target=listen, args=())
-        threadhandle = Thread(target=handle, args=())
         threadrecv.start()
-        threadhandle.start()
         menu()
     except KeyboardInterrupt:
         threadrecv.join()
-        threadhandle.join()
         print("Keluar....")
         exit()
