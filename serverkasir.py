@@ -28,6 +28,10 @@ def listen():
         c, addr = s.accept()
         clients.append(c)
         data = c.recv(1024).decode()
+        if data == 'exit':
+            for c in clients:
+                clients.remove(c)
+                print("1 Client telah terputus!")
         f = open('log.csv', 'a')
         f.write(data + '\n')
         f.close()
