@@ -20,15 +20,17 @@ def write():
         c, addr = s.accept()
         clients.append(c)
         data = c.recv(1024).decode()
-        while a == True:
+        while True:
             if data == 'exit':
                 for c in clients:
                     clients.remove(c)
+                break
             else:
                 f = open('log.csv', 'a')
                 f.write(data + '\n')
                 f.close()
                 print("\nData Masuk!")
+                break
 
 def menu():
     print("=============Pusat Data Storage Kasir==============")
