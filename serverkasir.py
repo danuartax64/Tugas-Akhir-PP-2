@@ -29,7 +29,6 @@ def listen():
                 f = open('log.csv', 'a')
                 f.write(data + '\n')
                 f.close()
-                i = 0
                 print("\nData Masuk!")
                 time.sleep(1)
                 break
