@@ -30,19 +30,20 @@ def write():
             try:
                  c[0].settimeout(1)
                  data = c[0].recv(1024).decode()
-                 while True:
-                    if data == 'exit':
-                        for c in clients:
-                            clients.remove(c)
-                        break
-                    else:
-                        f = open('log.csv', 'a')
-                        f.write(data + '\n')
-                        f.close()
-                        print("\nData Masuk!")
-                        time.sleep(1)
-                        print ("\033[A                             \033[A")
-                        break
+                 if len(data) > 0:
+                     while True:
+                        if data == 'exit':
+                            break
+                        elif data == 'exitexit':
+                            break
+                        else:
+                            f = open('log.csv', 'a')
+                            f.write(data + '\n')
+                            f.close()
+                            print("Data Masuk")
+                            time.sleep(1)
+                            print ("\033[A                             \033[A")
+                            break
             except timeout:
                 pass
 
@@ -50,11 +51,10 @@ def menu():
     print("=============Pusat Data Storage Kasir==============")
     print("Listen on IP : %s" %host)
     print("Listen on Port : %d" %port)
+    print("Ctrl+C 2x untuk keluar")
     while a == True:
         try:
-            n = len(clients)
-            time.sleep(3)
-            print("Total client yang tersambung: %d" %n, end='\r')
+            time.sleep(1)
         except KeyboardInterrupt:
             break
 
