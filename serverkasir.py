@@ -8,6 +8,8 @@ clients = set()
 host = '192.168.210.205'
 port = 4200
 s = socket(AF_INET, SOCK_STREAM)
+c, addr = s.accept()
+data = c.recv(1024).decode()
 
 def Connecting():
     s.bind((host, port))
@@ -17,7 +19,6 @@ def Connecting():
 def handle():
     while True:
         global c
-        c, addr = s.accept()
         clients.add(c)
         global data
         if data == "exit":
@@ -28,7 +29,6 @@ def listen():
     try:
         while True:
             global data
-            data = c.recv(1024).decode()
             f = open('log.csv', 'a')
             f.write(data + '\n')
             f.close()
