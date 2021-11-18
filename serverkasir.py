@@ -15,12 +15,12 @@ def Connecting():
     s.listen()
 
 def listen():
+    c, addr = s.accept()
+    clients.append(c)
+    data = c.recv(1024).decode()
     global a
     while a == True:
         while True:
-            c, addr = s.accept()
-            clients.append(c)
-            data = c.recv(1024).decode()
             if data == 'exit':
                 for c in clients:
                     clients.remove(c)
