@@ -41,19 +41,18 @@ def write():
                         f.close()
                         print("\nData Masuk!")
                         time.sleep(1)
-                        os.system('clear')
                         break
             except timeout:
                 pass
 
 def menu():
-    while True:
-        print("=============Pusat Data Storage Kasir==============", end='\r')
-        print("Listen on IP : %s" %host, end='\r')
-        print("Listen on Port : %d" %port, end='\r')
+    print("=============Pusat Data Storage Kasir==============")
+    print("Listen on IP : %s" %host)
+    print("Listen on Port : %d" %port)
+    while a == True:
         try:
             n = len(clients)
-            time.sleep(1)
+            time.sleep(3)
             print("Total client yang tersambung: %d" %n, end='\r')
         except KeyboardInterrupt:
             break
