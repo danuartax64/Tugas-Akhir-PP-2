@@ -14,35 +14,33 @@ def Connecting():
     print("Koneksi berhasil dibuka")
     s.listen()
 
-def listen():
-    while True:
-        c, addr = s.accept()
-        clients.add(c)
+def handle():
+    global c
+    c, addr = s.accept()
+    clients.add(c)
+    if data == "exit":
+        clients.remove[c]
+        c.close()
 
-        try:
+def listen():
+    try:
+        while True:
+            global data
             data = c.recv(1024).decode()
-            if data == 'exit':
-                clients.remove[c]
-                c.close()
             f = open('log.csv', 'a')
             f.write(data + '\n')
             f.close()
             i = 0
-
-            for i in range(4):
-                print("\nData Masuk!", end='\r')
-                time.sleep(0.5)
-                print('', end='\r')
-                i += 1
-
-        except:
-            print("Listening...", end='\r')
+            print("Data Masuk!")
+            time.sleep(1)
+    except:
+        print("Listening...", end='\r')
 
 def menu():
-    print("=============Pusat Data Storage Kasir==============")
-    print("Listen on IP : %s" %host)
-    print("Listen on Port : %d" %port)
     while True:
+        print("=============Pusat Data Storage Kasir==============", end='\r')
+        print("Listen on IP : %s" %host, end='\r')
+        print("Listen on Port : %d" %port, end='\r')
         try:
             n = len(clients)
             time.sleep(1)
@@ -54,11 +52,12 @@ if __name__ == '__main__':
     Connecting()
     try:
         threadrecv = Thread(target=listen, args=())
-        threadmenu = Thread(target=menu, args=())
+        threadhandle = Thread(target=handle, args=())
         threadrecv.start()
-        threadmenu.start()
+        threadhandle.start()
+        menu()
     except KeyboardInterrupt:
         threadrecv.join()
-        threadmenu.join()
+        threadhandle.join()
         print("Keluar....")
         exit()
