@@ -2,6 +2,7 @@ from socket import AF_INET, SOCK_STREAM, socket, timeout
 from threading import Thread
 import time
 from sys import exit
+import os
 
 clients = []
 
@@ -39,15 +40,17 @@ def write():
                         f.write(data + '\n')
                         f.close()
                         print("\nData Masuk!")
+                        time.sleep(1)
+                        os.system('clear')
                         break
             except timeout:
                 pass
 
 def menu():
-    print("=============Pusat Data Storage Kasir==============")
-    print("Listen on IP : %s" %host)
-    print("Listen on Port : %d" %port)
     while True:
+        print("=============Pusat Data Storage Kasir==============", end='\r')
+        print("Listen on IP : %s" %host, end='\r')
+        print("Listen on Port : %d" %port, end='\r')
         try:
             n = len(clients)
             time.sleep(1)
