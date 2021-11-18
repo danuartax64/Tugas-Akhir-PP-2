@@ -19,6 +19,7 @@ def handle():
         global c
         c, addr = s.accept()
         clients.add(c)
+        global data
         if data == "exit":
             clients.remove[c]
             c.close()
