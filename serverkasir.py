@@ -51,11 +51,6 @@ def menu():
     print("Listen on IP : %s" %host)
     print("Listen on Port : %d" %port)
     print("Ctrl+C 2x untuk keluar")
-    while a == True:
-        try:
-            time.sleep(1)
-        except KeyboardInterrupt:
-            break
 
 if __name__ == '__main__':
     try:
