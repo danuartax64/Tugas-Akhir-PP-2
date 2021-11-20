@@ -2,7 +2,6 @@ from socket import AF_INET, SOCK_STREAM, socket, timeout
 from threading import Thread
 import time
 from sys import exit
-import os
 
 clients = []
 
