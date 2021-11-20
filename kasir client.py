@@ -2,8 +2,6 @@ import os
 import socket
 import sys
 import time
-from socket import timeout
-from threading import Thread
 
 s = socket.socket()
 n = 0
@@ -11,7 +9,10 @@ log = []
 a = True
 
 def clear():
-    os.system('cls') #KHUSUS WINDOWS, ganti clear untuk LINUX
+    try:
+        os.system('cls')
+    except:
+        os.system('clear')
 
 def menu():
     while True:
@@ -100,16 +101,6 @@ def connecting():
         time.sleep(1)
         return 'error'
 
-def recv():
-    global a
-    while a is True:
-        time.sleep(0.1)
-        try:
-            s.settimeout(1)
-        except timeout:
-            pass
-        except:
-            a = False
 
 def masuklist(a, b, c, d, e):
     log.append(b + ',')
@@ -120,7 +111,6 @@ def masuklist(a, b, c, d, e):
     log.append('\n')
 
 if __name__ == '__main__':
-    threadrecv = Thread(target=recv, args=())
     client = input('Masuk sebagai: ')
     try:
         if connecting() == 'error':
@@ -128,10 +118,8 @@ if __name__ == '__main__':
             print("Closing App...")
             sys.exit()
         else:
-            threadrecv.start()
             menu()
     except:
         a = False
         s.send("exit".encode())
-        threadrecv.join()
         sys.exit()
