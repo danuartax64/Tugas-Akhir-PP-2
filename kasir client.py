@@ -9,10 +9,7 @@ log = []
 a = True
 
 def clear():
-    try:
-        os.system('cls')
-    except:
-        os.system('clear')
+    os.system('cls')        #ganti clear apabila dijalankan pada linux, cls hanya pada windows
 
 def menu():
     while True:
