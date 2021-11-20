@@ -110,16 +110,15 @@ def masuklist(a, b, c, d, e):
     log.append(e + ',')
     log.append('\n')
 
-if __name__ == '__main__':
-    client = input('Masuk sebagai: ')
-    try:
-        if connecting() == 'error':
-            print("Ada yang salah dengan host / port server")
-            print("Closing App...")
-            sys.exit()
-        else:
-            menu()
-    except:
-        a = False
-        s.send("exit".encode())
+client = input('Masuk sebagai: ')
+try:
+    if connecting() == 'error':
+        print("Ada yang salah dengan host / port server")
+        print("Closing App...")
         sys.exit()
+    else:
+        menu()
+except:
+    a = False
+    s.send("exit".encode())
+    sys.exit()
