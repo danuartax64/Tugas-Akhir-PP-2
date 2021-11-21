@@ -55,7 +55,7 @@ def menu():
 if __name__ == '__main__':
     try:
         f = open('log.csv', 'x')
-        f.write('User,Barang,Harga,Kuantitas,Total,\n')
+        f.write('User,Barang,Harga,Kuantitas,Total\n')
         f.close()
         print("File log telah dibuat")
     except:
